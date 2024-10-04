@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+import static org.springframework.data.domain.Sort.by;
 import static org.springframework.http.ResponseEntity.*;
 
 @RestController
@@ -89,7 +90,7 @@ public class TaskController {
      * @param sort   Campo para ordenação.
      * @return ResponseEntity com o status 200 (OK) e a página de tarefas.
      */
-    @GetMapping("/todos")
+    @GetMapping("/all")
     @Operation(summary = "Listar todas as tarefas", description = "Retorna uma lista paginada de todas as tarefas.")
     @ApiResponse(responseCode = "200", description = "Lista de tarefas.")
     public ResponseEntity<Page<TaskDetailDTO>> listarTodos(
@@ -105,7 +106,7 @@ public class TaskController {
             size = limit;
         }
 
-        Pageable paginacao = PageRequest.of(page, size, Sort.by(sort));
+        Pageable paginacao = PageRequest.of(page, size, by(sort));
         Page<TaskDetailDTO> tarefas = taskService.getAllTasks(paginacao);
         return ok(tarefas);
     }

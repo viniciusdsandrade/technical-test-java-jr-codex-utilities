@@ -68,16 +68,7 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada com ID: " + taskUpdateDTO.id()));
         log.info("Tarefa encontrada para atualização: {}", task);
 
-        // Atualizar os campos se eles forem fornecidos
-        if (taskUpdateDTO.description() != null) {
-            task.setDescription(taskUpdateDTO.description());
-            log.info("Descrição da tarefa atualizada para: {}", taskUpdateDTO.description());
-        }
-
-        if (taskUpdateDTO.done() != null) {
-            task.setDone(taskUpdateDTO.done());
-            log.info("Status 'done' da tarefa atualizado para: {}", taskUpdateDTO.done());
-        }
+        task.update(taskUpdateDTO);
 
         // Salvar a tarefa atualizada
         Task updatedTask = taskRepository.save(task);

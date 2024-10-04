@@ -22,7 +22,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("API para Gerenciamento de Todo List")
-                        .description("Solutis School Dev Trail - Nivelamento - 2024")
+                        .description("4) Simple Todo List - Technical Test Codex Java Jr.")
                         .version(apiVersion)
                         .license(new License().url("https://www.apache.org/licenses/LICENSE-2.0.html"))
                         .contact(new Contact()

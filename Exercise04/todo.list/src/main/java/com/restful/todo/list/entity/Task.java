@@ -1,6 +1,8 @@
 package com.restful.todo.list.entity;
 
+import com.restful.todo.list.dto.TaskUpdateDTO;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.util.Objects;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.util.Optional.ofNullable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +30,12 @@ public class Task {
     private Long id;
     private String description;
     private boolean done;
+
+    public void update(@Valid TaskUpdateDTO taskUpdateDTO) {
+        // Atualizar a descrição se fornecida
+        ofNullable(taskUpdateDTO.description()).ifPresent(this::setDescription);
+        ofNullable(taskUpdateDTO.done()).ifPresent(this::setDone);
+    }
 
     @Override
     public final boolean equals(Object o) {
