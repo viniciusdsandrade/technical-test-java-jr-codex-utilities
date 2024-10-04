@@ -11,13 +11,6 @@ package com.restful.rest.client.world.clock.exception;
 /// @implNote É uma exceção checked, o que significa que deve ser tratada ou propagada explicitamente.
 public class WorldClockException extends Exception {
 
-    /// Constrói uma nova exceção 'WorldClockException' com a mensagem fornecida.
-    ///
-    /// @param message A mensagem descritiva do erro ocorrido.
-    public WorldClockException(String message) {
-        super(message);
-    }
-
     /// Constrói uma nova exceção 'WorldClockException' com a mensagem e a causa fornecidas.
     ///
     /// @param message A mensagem descritiva do erro ocorrido.

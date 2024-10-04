@@ -32,7 +32,7 @@ public class WorldClockServiceImpl implements WorldClockService {
 
     /// Implementação do metodo 'getCurrentUtcTime' definido na interface 'WorldClockService'.
     ///
-    /// Este metodo faz uma chamada HTTP GET para a API de tempo em '[...](http://worldtimeapi.org/api/timezone/Etc/UTC)',
+    /// Este metodo faz uma chamada HTTP GET para a API de tempo em '[...](https://worldtimeapi.org/api/timezone/Etc/UTC)',
     /// recuperando a hora atual no formato UTC (Tempo Universal Coordenado).
     ///
     /// - Se a chamada for bem-sucedida, o metodo retorna uma instância de 'WorldClockResponse' contendo os dados
@@ -47,7 +47,7 @@ public class WorldClockServiceImpl implements WorldClockService {
     /// ('WorldClockHttpException' e 'WorldClockException') para diferenciar os tipos de erro.
     @Override
     public WorldClockResponse getCurrentUtcTime() throws WorldClockException {
-        String url = "http://worldtimeapi.org/api/timezone/Etc/UTC";
+        String url = "https://worldtimeapi.org/api/timezone/Etc/UTC";
         try {
             return restTemplate.getForObject(url, WorldClockResponse.class);
         } catch (HttpClientErrorException e) {

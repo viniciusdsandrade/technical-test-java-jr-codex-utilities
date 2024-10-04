@@ -19,7 +19,6 @@ public class Retangulo implements Cloneable {
     }
 
     // Verifica se o retângulo é válido
-    // Agora permite retângulos onde as dimensões podem ser zero (interseções unidimensionais)
     private boolean isValid() {
         return x1 <= x2 && y1 <= y2;
     }

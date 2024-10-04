@@ -8,11 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.time.ZoneId.systemDefault;
+import static java.time.ZonedDateTime.parse;
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 /// Controlador da aplicação responsável por lidar com as requisições relacionadas ao horário UTC e horário local.
 ///
@@ -52,13 +55,15 @@ public class WorldClockController {
 
             if (response != null && response.utcDateTime() != null) {
                 // Parse da data/hora UTC
-                ZonedDateTime utcDateTime = ZonedDateTime.parse(response.utcDateTime());
+                ZonedDateTime utcDateTime = parse(response.utcDateTime());
 
                 // Conversão para o horário local
-                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(ZoneId.systemDefault());
+                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(systemDefault());
 
                 // Formatação das datas em UTC e local
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+                // Alterado o padrão de "yyyy-MM-dd HH:mm:ss z" para "dd/MM/yyyy HH:mm:ss z"
+                // para garantir que o formato seja consistente com o esperado pelo JavaScript.
+                DateTimeFormatter formatter = ofPattern("dd/MM/yyyy HH:mm:ss z");
 
                 String formattedUtcTime = utcDateTime.format(formatter);
                 String formattedLocalTime = localDateTime.format(formatter);
@@ -98,13 +103,14 @@ public class WorldClockController {
 
             if (response != null && response.utcDateTime() != null) {
                 // Parse da data/hora UTC
-                ZonedDateTime utcDateTime = ZonedDateTime.parse(response.utcDateTime());
+                ZonedDateTime utcDateTime = parse(response.utcDateTime());
 
                 // Conversão para o horário local
-                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(ZoneId.systemDefault());
+                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(systemDefault());
 
                 // Formatação das datas em ISO 8601
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+                // Mantém o formato ISO 8601 para padronização em APIs.
+                DateTimeFormatter formatter = ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
                 // Adiciona os horários ao mapa
                 timeData.put("utcTime", utcDateTime.format(formatter));

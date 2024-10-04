@@ -1,72 +1,119 @@
 <!DOCTYPE html>
+<!-- Define o tipo de documento como HTML5, garantindo que o navegador interprete a página corretamente -->
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<!--
+    xmlns:th="http://www.thymeleaf.org":
+        Declara o namespace do Thymeleaf, um motor de template usado para inserir conteúdo dinâmico no HTML.
+    lang="pt-BR":
+        Define o idioma da página como Português do Brasil, o que é importante para acessibilidade e SEO.
+-->
 <head>
+    <!-- Meta tags e títulos são essenciais para a definição do comportamento e informações da página -->
     <meta charset="UTF-8">
+    <!-- Define a codificação de caracteres como UTF-8 para suportar caracteres especiais -->
     <title>Hora Atual</title>
+    <!-- Título da página que aparece na aba do navegador -->
     <style>
+        /* Estilos CSS internos para definir a aparência da página */
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
+            font-family: Arial, sans-serif; /* Define a fonte padrão para melhor legibilidade */
+            margin: 40px; /* Adiciona uma margem ao redor do conteúdo para espaçamento */
         }
 
         .error {
-            color: red;
+            color: red; /* Estiliza mensagens de erro com a cor vermelha para destaque */
         }
 
         .time-container {
-            margin-top: 20px;
+            margin-top: 15px; /* Adiciona espaço acima do contêiner de horário para organização visual */
         }
     </style>
 </head>
 <body>
-<h1>Hora Atual</h1>
+<!-- Início do corpo da página -->
 
+<h1>Hora Atual</h1>
+<!-- Título principal da página -->
+
+<!--
+    Div para exibir mensagens de erro.
+    th:if="${error}": Renderiza este bloco apenas se houver uma mensagem de erro.
+    class="error": Aplica o estilo definido para erros.
+-->
 <div id="error" th:if="${error}" class="error">
+    <!--
+        Parágrafo que exibirá a mensagem de erro vinda do servidor.
+        th:text="${error}": Insere o texto da variável 'error' no conteúdo do parágrafo.
+    -->
     <p th:text="${error}"></p>
 </div>
 
+<!--
+    Div para exibir o horário quando não há erros.
+    th:unless="${error}": Renderiza este bloco apenas se NÃO houver mensagem de erro.
+    class="time-container": aplica o estilo definido para o contêiner de horário.
+-->
 <div id="timeContainer" th:unless="${error}" class="time-container">
+    <!--
+        Exibe a Hora UTC.
+        th:text="${utcTime}": Insere o horário UTC vindo do servidor.
+    -->
     <h2>Hora UTC: <span id="utcTime" th:text="${utcTime}"></span></h2>
+    <!--
+        Exibe a Hora Local.
+        th:text="${localTime}": Insere o horário local vindo do servidor.
+    -->
     <h2>Hora Local: <span id="localTime" th:text="${localTime}"></span></h2>
 </div>
 
+<!--
+    Script JavaScript para atualizar e sincronizar os relógios.
+    th:inline="javascript": permite que o Thymeleaf processe variáveis dentro do script.
+-->
 <script th:inline="javascript">
-    let timeOffset = 0; // Diferença em milissegundos entre servidor e cliente
+    // Variável para armazenar a diferença de tempo entre o servidor e o cliente em milissegundos
+    let timeOffset = 0;
+
+    // Identificador do intervalo que atualiza o relógio, usado para limpar o intervalo quando necessário
     let clockInterval = null;
 
     /**
      * Função para atualizar o horário fazendo uma requisição ao servidor.
      */
     function updateTimeFromServer() {
+        // Faz uma requisição ao endpoint '/api/time' para obter o horário atual
         fetch('/api/time')
-            .then(response => response.json())
+            .then(response => response.json()) // Converte a resposta para JSON
             .then(data => {
                 if (data.error) {
-                    // Exibe a mensagem de erro e oculta o container de horário
+                    // Se houver um erro na resposta, exibe a mensagem de erro
                     document.getElementById('error').innerText = data.error;
-                    document.getElementById('error').style.display = 'block';
-                    document.getElementById('timeContainer').style.display = 'none';
-                    clearInterval(clockInterval); // Para o relógio em caso de erro
+                    document.getElementById('error').style.display = 'block'; // Mostra a div de erro
+                    document.getElementById('timeContainer').style.display = 'none'; // Oculta o contêiner de horário
+                    clearInterval(clockInterval); // Para a atualização do relógio em caso de erro
                 } else {
                     // Calcula a diferença entre o tempo do servidor e o tempo do cliente
                     const serverTime = new Date(data.utcTime).getTime();
                     const clientTime = Date.now();
                     timeOffset = serverTime - clientTime;
 
+                    // Limpa a mensagem de erro e ajusta a visibilidade dos elementos
                     document.getElementById('error').innerText = '';
                     document.getElementById('error').style.display = 'none';
                     document.getElementById('timeContainer').style.display = 'block';
 
-                    // Inicializa ou reinicializa os relógios
+                    // Inicializa ou reinicializa os relógios com a nova sincronização
                     initializeClocks();
                 }
             })
             .catch(error => {
+                // Trata erros de rede ou outros problemas na requisição
                 console.error('Erro ao atualizar o horário:', error);
                 document.getElementById('error').innerText = 'Erro ao atualizar o horário.';
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('timeContainer').style.display = 'none';
-                clearInterval(clockInterval); // Para o relógio em caso de erro
+                document.getElementById('error').style.display = 'block'; // Mostra a div de erro
+                document.getElementById('timeContainer').style.display = 'none'; // Oculta o contêiner de horário
+                clearInterval(clockInterval); // Para a atualização do relógio em caso de erro
             });
     }
 
@@ -74,16 +121,17 @@
      * Função para inicializar e atualizar os relógios em tempo real no front end.
      */
     function initializeClocks() {
-        // Evita múltiplas instâncias do intervalo
+        // Evita a criação de múltiplas instâncias do intervalo de atualização
         if (clockInterval) {
             clearInterval(clockInterval);
         }
 
-        // Atualiza os relógios a cada segundo
+        // Define um intervalo para atualizar os relógios a cada segundo
         clockInterval = setInterval(() => {
+            // Obtém o horário atual ajustado pelo offset de sincronização
             const now = new Date(Date.now() + timeOffset);
 
-            // Hora UTC
+            // Formata a Hora UTC conforme as convenções brasileiras
             const utcTime = now.toLocaleString('pt-BR', {
                 year: 'numeric',
                 month: '2-digit',
@@ -91,11 +139,11 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
-                timeZone: 'UTC',
-                timeZoneName: 'short'
-            }).replace(',', '');
+                timeZone: 'UTC', // Define o fuso horário como UTC
+                timeZoneName: 'short' // Inclui a abreviação do fuso horário
+            }).replace(',', ''); // Remove vírgula extra na formatação
 
-            // Hora Local
+            // Formata a Hora Local conforme as convenções brasileiras
             const localTime = now.toLocaleString('pt-BR', {
                 year: 'numeric',
                 month: '2-digit',
@@ -103,15 +151,16 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
-                timeZoneName: 'short'
-            }).replace(',', '');
+                timeZoneName: 'short' // Inclui a abreviação do fuso horário local
+            }).replace(',', ''); // Remove vírgula extra na formatação
 
-            // Atualiza os elementos no DOM
+            // Atualiza os elementos no DOM com os horários formatados
             document.getElementById('utcTime').innerText = utcTime;
             document.getElementById('localTime').innerText = localTime;
-        }, 1000); // 1 segundo
+        }, 1000); // Atualiza a cada 1 segundo
     }
 
+    // Adiciona um listener para executar o código após o carregamento completo do DOM
     document.addEventListener('DOMContentLoaded', () => {
         // Verifica se há erro na renderização inicial
         const initialError = /*[[${error != null}]]*/ false;
@@ -121,13 +170,14 @@
             const initialUtcTime = new Date(initialUtcTimeString).getTime();
 
             const clientTime = Date.now();
-            // Calcula o offset com base no horário UTC inicial
+            // Calcula o offset inicial com base no horário UTC fornecido pelo servidor
             timeOffset = initialUtcTime - clientTime;
 
+            // Chama a função para iniciar a atualização dos relógios
             initializeClocks();
         }
 
-        // Atualiza a sincronização com o servidor a cada 60 segundos
+        // Define um intervalo para atualizar a sincronização com o servidor a cada 60 segundos
         setInterval(updateTimeFromServer, 60000); // 60 segundos
     });
 </script>
