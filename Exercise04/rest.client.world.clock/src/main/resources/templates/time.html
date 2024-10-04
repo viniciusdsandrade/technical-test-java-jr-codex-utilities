@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Hora Atual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .time-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Hora Atual</h1>
+
+<div id="error" th:if="${error}" class="error">
+    <p th:text="${error}"></p>
+</div>
+
+<div id="timeContainer" th:unless="${error}" class="time-container">
+    <h2>Hora UTC: <span id="utcTime" th:text="${utcTime}"></span></h2>
+    <h2>Hora Local: <span id="localTime" th:text="${localTime}"></span></h2>
+</div>
+
+<script th:inline="javascript">
+    let timeOffset = 0; // Diferença em milissegundos entre servidor e cliente
+    let clockInterval = null;
+
+    /**
+     * Função para atualizar o horário fazendo uma requisição ao servidor.
+     */
+    function updateTimeFromServer() {
+        fetch('/api/time')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    // Exibe a mensagem de erro e oculta o container de horário
+                    document.getElementById('error').innerText = data.error;
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('timeContainer').style.display = 'none';
+                    clearInterval(clockInterval); // Para o relógio em caso de erro
+                } else {
+                    // Calcula a diferença entre o tempo do servidor e o tempo do cliente
+                    const serverTime = new Date(data.utcTime).getTime();
+                    const clientTime = Date.now();
+                    timeOffset = serverTime - clientTime;
+
+                    document.getElementById('error').innerText = '';
+                    document.getElementById('error').style.display = 'none';
+                    document.getElementById('timeContainer').style.display = 'block';
+
+                    // Inicializa ou reinicializa os relógios
+                    initializeClocks();
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar o horário:', error);
+                document.getElementById('error').innerText = 'Erro ao atualizar o horário.';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('timeContainer').style.display = 'none';
+                clearInterval(clockInterval); // Para o relógio em caso de erro
+            });
+    }
+
+    /**
+     * Função para inicializar e atualizar os relógios em tempo real no front end.
+     */
+    function initializeClocks() {
+        // Evita múltiplas instâncias do intervalo
+        if (clockInterval) {
+            clearInterval(clockInterval);
+        }
+
+        // Atualiza os relógios a cada segundo
+        clockInterval = setInterval(() => {
+            const now = new Date(Date.now() + timeOffset);
+
+            // Hora UTC
+            const utcTime = now.toLocaleString('pt-BR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZone: 'UTC',
+                timeZoneName: 'short'
+            }).replace(',', '');
+
+            // Hora Local
+            const localTime = now.toLocaleString('pt-BR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZoneName: 'short'
+            }).replace(',', '');
+
+            // Atualiza os elementos no DOM
+            document.getElementById('utcTime').innerText = utcTime;
+            document.getElementById('localTime').innerText = localTime;
+        }, 1000); // 1 segundo
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Verifica se há erro na renderização inicial
+        const initialError = /*[[${error != null}]]*/ false;
+        if (!initialError) {
+            // Inicializa os relógios com os valores renderizados pelo servidor
+            const initialUtcTimeString = '/*[[${utcTime}]]*/';
+            const initialUtcTime = new Date(initialUtcTimeString).getTime();
+
+            const clientTime = Date.now();
+            // Calcula o offset com base no horário UTC inicial
+            timeOffset = initialUtcTime - clientTime;
+
+            initializeClocks();
+        }
+
+        // Atualiza a sincronização com o servidor a cada 60 segundos
+        setInterval(updateTimeFromServer, 60000); // 60 segundos
+    });
+</script>
+</body>
+</html>
