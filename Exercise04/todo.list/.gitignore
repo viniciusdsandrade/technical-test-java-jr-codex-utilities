@@ -34,4 +34,5 @@ build/
 
 
 ### Environments ###
+todo.list/.env
 .env
