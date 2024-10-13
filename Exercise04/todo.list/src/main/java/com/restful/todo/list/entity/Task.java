@@ -65,7 +65,7 @@ public class Task {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder sb = new StringBuilder("Task{");
         sb.append("id=").append(id);
         sb.append(", description='").append(description).append('\'');

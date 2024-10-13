@@ -1,6 +1,6 @@
-import geometry.Retangulo;
+import geometry.Rectangle;
 
-import static geometry.Retangulo.intersects;
+import static geometry.Rectangle.isIntersection;
 
 /*
     2) Test if two rectangles intersect
@@ -38,12 +38,12 @@ import static geometry.Retangulo.intersects;
 
 public static void main(String[] ignoredArgs) {
     // Definindo os retângulos A, B e C
-    Retangulo A = new Retangulo(3, 5, 11, 11);
-    Retangulo B = new Retangulo(7, 2, 13, 7);
-    Retangulo C = new Retangulo(11, 11, 15, 13);
+    Rectangle A = new Rectangle(3, 5, 11, 11);
+    Rectangle B = new Rectangle(7, 2, 13, 7);
+    Rectangle C = new Rectangle(11, 11, 15, 13);
 
     // Testando as interseções
-    System.out.println("intersects(A, B): " + intersects(A, B)); // true
-    System.out.println("intersects(A, C): " + intersects(A, C)); // true
-    System.out.println("intersects(B, C): " + intersects(B, C)); // false
+    System.out.println("intersects(A, B): " + isIntersection(A, B)); // true
+    System.out.println("intersects(A, C): " + isIntersection(A, C)); // true
+    System.out.println("intersects(B, C): " + isIntersection(B, C)); // false
 }

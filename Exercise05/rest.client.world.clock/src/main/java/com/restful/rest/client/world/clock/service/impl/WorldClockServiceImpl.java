@@ -51,11 +51,9 @@ public class WorldClockServiceImpl implements WorldClockService {
         try {
             return restTemplate.getForObject(url, WorldClockResponse.class);
         } catch (HttpClientErrorException e) {
-            // Lança uma exceção específica para erros HTTP
-            throw new WorldClockHttpException("Erro ao buscar o horário UTC: " + e.getStatusCode(), e);
+            throw new WorldClockHttpException("Erro ao buscar o horário UTC: " + e.getStatusCode(), e); // Lança uma exceção específica para erros HTTP
         } catch (Exception e) {
-            // Lança uma exceção geral para outros erros
-            throw new WorldClockException("Erro ao buscar o horário UTC", e);
+            throw new WorldClockException("Erro ao buscar o horário UTC", e); // Lança uma exceção geral para outros erros
         }
     }
 }

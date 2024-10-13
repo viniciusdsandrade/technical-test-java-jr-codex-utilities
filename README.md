@@ -1,29 +1,34 @@
-
 # Kaffa Mobile - Pre-qualification Test
 
 **Vaga:** Desenvolvedor Back-End JR (Java/Kotlin)
 
 **Descrição da vaga:**  
-Realizar as atividades de análise, desenvolvimento, manutenção, implantação, sustentação e documentação de software garantindo a qualidade das entregas.
+Realizar as atividades de análise, desenvolvimento, manutenção, implantação, sustentação e documentação de software
+garantindo a qualidade das entregas.
 
 **Responsabilidades e atribuições:**
+
 - Desenvolvimento de sistemas;
 - Gerar e gerenciar releases no GitHub;
 - Apoiar o time no desenvolvimento das atividades do projeto.
 
 **Requisitos e qualificações:**
+
 - Ensino superior completo ou cursando;
 
 **Habilidades Necessárias:**
+
 - Experiência com duas ou mais das seguintes tecnologias: Kotlin, Java, Android, React, TypeScript e SQL;
 - Análise crítica e capacidade em resolução de problemas.
 
 **Habilidades Desejáveis:**
-- Conhecimento em Node.Js, React e outros frameworks de mercado;
+
+- Conhecimento em NodeJs, React e outros frameworks de mercado;
 - Experiência com integração contínua e TDD;
 - Experiência com modelagem e consumo de APIs REST.
 
 **Diferenciais:**
+
 - Experiência com arquitetura de soluções;
 - Liderança de times de desenvolvimento de software/produto;
 - Experiência com desenvolvimento de soluções GIS;
@@ -32,7 +37,9 @@ Realizar as atividades de análise, desenvolvimento, manutenção, implantação
 
 ---
 
-Este repositório contém a solução para os exercícios propostos no teste técnico da Kaffa Mobile. As soluções foram desenvolvidas utilizando Java para a validação de CNPJ e outros exercícios conforme descritos abaixo. Cada exercício foi implementado para ser facilmente executado e testado.
+Este repositório contém a solução para os exercícios propostos no teste técnico da Kaffa Mobile. As soluções foram
+desenvolvidas utilizando Java para a validação de CNPJ e outros exercícios conforme descritos abaixo. Cada exercício foi
+implementado para ser facilmente executado e testado.
 
 ### Lista de Exercícios:
 
@@ -44,15 +51,17 @@ Este repositório contém a solução para os exercícios propostos no teste té
 6) Rest Server - World Clock
 7) Entity Relationship Diagram - Simple Order Manager
 
-
 ## Requisitos
+
 Para rodar o projeto, certifique-se de ter instalado:
+
 - Java JDK 23
 
 ## Como rodar
+
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/viniciusdsandrade/technical-test-codex-java-jr
+   git clone https://github.com/viniciusdsandrade/technical-test-java-jr-codex-utilities
    cd seu_repositorio
    ```
 
@@ -60,9 +69,11 @@ Para rodar o projeto, certifique-se de ter instalado:
 
 ### 1) Validação de CNPJ
 
-Este exercício consiste em validar se uma string está no formato correto de CNPJ e verificar seus dígitos verificadores conforme o algoritmo definido pela Receita Federal.
+Este exercício consiste em validar se uma string está no formato correto de CNPJ e verificar seus dígitos verificadores
+conforme o algoritmo definido pela Receita Federal.
 
 #### Exemplo de Códigos:
+
 ```java
 import static java.lang.Character.getNumericValue;
 
@@ -72,7 +83,7 @@ public class CNPJValidator {
         String cnpjNumeros, cnpjBase, digitoVerificadorCalculado, digitoVerificadorOriginal;
 
         // Remove todos os caracteres não numéricos
-        cnpjNumeros = cnpj.replaceAll("\D", "");
+        cnpjNumeros = cnpj.replaceAll("\\D", "");
 
         // Verifica se o CNPJ tem 14 dígitos
         if (cnpjNumeros.length() != 14) {
@@ -94,9 +105,12 @@ public class CNPJValidator {
 ```
 
 #### Como testar:
-Para testar a validação de CNPJs, execute o método `main` com uma lista de CNPJs formatados e não formatados. O programa retornará se cada CNPJ é válido ou não.
+
+Para testar a validação de CNPJs, execute o método `main` com uma lista de CNPJs formatados e não formatados. O programa
+retornará se cada CNPJ é válido ou não.
 
 #### Exemplo de Saída:
+
 ```bash
 CNPJ  1 (12.345.678/0001-95) é válido
 CNPJ  2 (12345678000195) é válido
@@ -105,15 +119,17 @@ CNPJ  3 (48.724.911/0001-99) é inválido
 ```
 
 #### Screenshots
+
 Aqui estão alguns exemplos do código em execução:
 ![Validação CNPJ](screenshot)
 
-
 ### 2) Teste de Interseção entre Retângulos
 
-Neste exercício, foram definidos três retângulos em um grid discreto, e a tarefa é verificar se eles se intersectam, considerando seus vértices. Um retângulo no formato (0, 0; 1, 1) terá uma área de 4 unidades.
+Neste exercício, foram definidos três retângulos em um grid discreto, e a tarefa é verificar se eles se intersectam,
+considerando seus vértices. Um retângulo no formato (0, 0; 1, 1) terá uma área de 4 unidades.
 
 #### Exemplo de Código:
+
 ```java
 import geometry.Retangulo;
 
@@ -167,9 +183,12 @@ public static void main(String[] ignoredArgs) {
 ```
 
 #### Como testar:
-Para testar a interseção entre os retângulos, execute o código acima. O programa exibirá o resultado de cada teste de interseção entre os retângulos definidos.
+
+Para testar a interseção entre os retângulos, execute o código acima. O programa exibirá o resultado de cada teste de
+interseção entre os retângulos definidos.
 
 #### Exemplo de Saída:
+
 ```bash
 intersects(A, B): true
 intersects(A, C): true
@@ -177,15 +196,17 @@ intersects(B, C): false
 ```
 
 #### Screenshots
+
 Aqui estão alguns exemplos do código em execução:
 ![Interseção Retângulos](screenshot)
 
-
 ### 3) Cálculo da Área de Interseção entre Retângulos
 
-Este exercício consiste em calcular a área de interseção entre dois retângulos em um grid discreto. Cada retângulo é definido por dois pontos, e a área é computada considerando que cada ponto tem dimensão de 1 unidade.
+Este exercício consiste em calcular a área de interseção entre dois retângulos em um grid discreto. Cada retângulo é
+definido por dois pontos, e a área é computada considerando que cada ponto tem dimensão de 1 unidade.
 
 #### Exemplo de Código:
+
 ```java
 import geometry.Retangulo;
 
@@ -238,24 +259,30 @@ public static void main(String[] ignoredArgs) {
 ```
 
 #### Como testar:
-Para testar o cálculo da área de interseção entre os retângulos, execute o código acima. O programa exibirá o valor da área de interseção para cada par de retângulos.
+
+Para testar o cálculo da área de interseção entre os retângulos, execute o código acima. O programa exibirá o valor da
+área de interseção para cada par de retângulos.
 
 #### Exemplo de Saída:
+
 ```bash
 Área de interseção entre A e B: 15
 Área de interseção entre A e C: 1
 ```
 
 #### Screenshots
+
 Aqui estão alguns exemplos do código em execução:
 ![Área de Interseção Retângulos](screenshot)
 
-
 ### 4) Simple Todo List
 
-Este exercício consiste em criar uma aplicação de lista de tarefas que permite a criação e exclusão de tarefas. A aplicação deve persistir as tarefas entre execuções e pode utilizar qualquer tipo de armazenamento, como banco de dados, arquivos ou PaaS (Firebase, etc).
+Este exercício consiste em criar uma aplicação de lista de tarefas que permite a criação e exclusão de tarefas. A
+aplicação deve persistir as tarefas entre execuções e pode utilizar qualquer tipo de armazenamento, como banco de dados,
+arquivos ou PaaS (Firebase, etc).
 
 #### Exemplo de Código:
+
 ```java
 package com.restful.todo.list.controller;
 
@@ -291,13 +318,17 @@ public class TaskController {
 ```
 
 #### Persistência de Tarefas:
-A persistência das tarefas foi implementada utilizando um banco de dados relacional com JPA, através da entidade `Task` e o repositório `TaskRepository`.
+
+A persistência das tarefas foi implementada utilizando um banco de dados relacional com JPA, através da entidade `Task`
+e o repositório `TaskRepository`.
 
 #### Como testar:
+
 1. Utilize o Postman ou outro cliente REST para criar, atualizar e excluir tarefas através dos endpoints.
 2. Persistência entre execuções pode ser verificada reiniciando a aplicação e consultando as tarefas novamente.
 
 #### Exemplo de Saída:
+
 ```bash
 POST /api/v1/task
 {
@@ -325,15 +356,17 @@ Resposta: 204 No Content
 ```
 
 #### Screenshots
+
 Aqui estão alguns exemplos da aplicação em execução:
 ![Todo List API](screenshot)
 
-
 ### 5) Rest Client - World Clock
 
-Este exercício consiste em criar um cliente REST que consulta um servidor e exibe a data/hora atual nos fusos horários local e UTC.
+Este exercício consiste em criar um cliente REST que consulta um servidor e exibe a data/hora atual nos fusos horários
+local e UTC.
 
 #### Exemplo de Código:
+
 ```java
 package com.restful.rest.client.world.clock.controller;
 
@@ -361,10 +394,12 @@ public class WorldClockController {
 ```
 
 #### Como testar:
+
 1. Acesse a página inicial para visualizar o horário formatado em UTC e local.
 2. Para consultar a data/hora no formato JSON, faça uma requisição GET para `/api/time`.
 
 #### Exemplo de Saída:
+
 ```bash
 GET /api/time
 Resposta: 200 OK
@@ -375,15 +410,16 @@ Resposta: 200 OK
 ```
 
 #### Screenshots
+
 Aqui estão alguns exemplos da aplicação em execução:
 ![World Clock API](screenshot)
-
 
 ### 6) Rest Server - World Clock
 
 Este exercício consiste em criar um servidor REST que retorna um JSON com o horário atual em UTC, no formato ISO-8601.
 
 #### Exemplo de Código:
+
 ```java
 package com.restful.rest.server.world.clock.controller;
 
@@ -414,9 +450,11 @@ public class WorldClockController {
 ```
 
 #### Como testar:
+
 Faça uma requisição GET para o endpoint `/api/time/utc` e o servidor retornará a data/hora atual em UTC no formato JSON.
 
 #### Exemplo de Saída:
+
 ```bash
 GET /api/time/utc
 Resposta: 200 OK
@@ -426,15 +464,18 @@ Resposta: 200 OK
 ```
 
 #### Screenshots
+
 Aqui estão alguns exemplos da aplicação em execução:
 ![World Clock Rest Server](screenshot)
 
-
 ### 7) Entity Relationship Diagram - Simple Order Manager
 
-Este exercício consiste em modelar um sistema simples de gerenciamento de pedidos, incluindo as tabelas de Clientes, Produtos, Pedidos, Itens de Pedido e Pagamentos. Abaixo está o SQL que descreve o modelo de relacionamento entre essas entidades.
+Este exercício consiste em modelar um sistema simples de gerenciamento de pedidos, incluindo as tabelas de Clientes,
+Produtos, Pedidos, Itens de Pedido e Pagamentos. Abaixo está o SQL que descreve o modelo de relacionamento entre essas
+entidades.
 
-#### Exemplo de Código:
+#### Código MySQL:
+
 ```mysql
 DROP DATABASE IF EXISTS db_simple_order_manager;
 CREATE DATABASE IF NOT EXISTS db_simple_order_manager;
@@ -502,24 +543,32 @@ CREATE TABLE IF NOT EXISTS tb_payments
 ```
 
 #### Como testar:
-Este exercício é apenas de documentação, sem execução prática. O código SQL acima pode ser utilizado para criar o banco de dados de gerenciamento de pedidos em um servidor MySQL ou MariaDB.
+
+Embora o exercício seja apenas a modelagem do banco de dados, você pode testar a criação das tabelas e relacionamentos
+executando o SQL acima em um banco de dados MySQL.
+A orderem sugerida é:
+1 - 'db_simple_order_manager';
+2 - 'rules_db_simple_order_manager';
+3 - 'seed_db_simple_order_manager';
 
 #### Extras:
+
 Aqui está o SQL para listar os pedidos com o número de itens:
 
 ```mysql
 CREATE VIEW vw_orders_with_item_count AS
-SELECT o.id         AS order_id,        
-       COUNT(oi.id) AS number_of_items, 
-       o.total_amount,                  
-       o.order_date,                    
-       o.status                         
+SELECT o.id         AS order_id,
+       COUNT(oi.id) AS number_of_items,
+       o.total_amount,
+       o.order_date,
+       o.status
 FROM tb_orders o
-JOIN tb_order_items oi ON o.id = oi.order_id
+         JOIN tb_order_items oi ON o.id = oi.order_id
 GROUP BY o.id;
 ```
 
 #### Índices:
+
 - **idx_orders_client_id**: acelera consultas de pedidos por cliente.
 - **idx_order_items_order_id**: melhora a busca por itens de pedidos.
 - **idx_order_items_product_id**: acelera consultas relacionadas a produtos.

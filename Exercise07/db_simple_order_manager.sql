@@ -78,8 +78,8 @@ CREATE TABLE IF NOT EXISTS tb_payments
 -- ######################################################################
 -- Índice: idx_orders_client_id
 -- Justificativa: Este índice acelera consultas que envolvem a busca de pedidos
--- por cliente. A coluna `client_id` será frequentemente usada em junções entre
--- `tb_clients` e `tb_orders` para listar os pedidos de um determinado cliente,
+-- por cliente. A coluna 'client_id' será frequentemente usada em junções entre
+-- 'tb_clients' e 'tb_orders' para listar os pedidos de um determinado cliente,
 -- por isso o índice melhora o desempenho dessas consultas.
 -- ######################################################################
 CREATE INDEX idx_orders_client_id ON tb_orders (client_id);
@@ -87,8 +87,8 @@ CREATE INDEX idx_orders_client_id ON tb_orders (client_id);
 -- ######################################################################
 -- Índice: idx_order_items_order_id
 -- Justificativa: Este índice é importante para acelerar consultas que buscam
--- itens de pedido com base no ID do pedido (`order_id`), que é a chave estrangeira
--- para `tb_orders`. Sempre que houver consultas listando os itens de um pedido,
+-- itens de pedido com base no ID do pedido ('order_id'), que é a chave estrangeira
+-- para 'tb_orders'. Sempre que houver consultas listando os itens de um pedido,
 -- este índice tornará a operação muito mais eficiente.
 -- ######################################################################
 CREATE INDEX idx_order_items_order_id ON tb_order_items (order_id);
@@ -104,7 +104,7 @@ CREATE INDEX idx_order_items_product_id ON tb_order_items (product_id);
 
 -- ######################################################################
 -- Índice: idx_payments_order_id
--- Justificativa: O índice na coluna `order_id` da tabela `tb_payments` melhora
+-- Justificativa: O índice na coluna 'order_id' da tabela 'tb_payments' melhora
 -- o desempenho das consultas que relacionam pagamentos aos pedidos. Isso é útil
 -- para rapidamente encontrar o pagamento de um determinado pedido ou listar todos
 -- os pagamentos feitos para um pedido.
@@ -113,7 +113,7 @@ CREATE INDEX idx_payments_order_id ON tb_payments (order_id);
 
 -- ######################################################################
 -- Índice: idx_clients_email
--- Justificativa: O índice único na coluna `email` da tabela `tb_clients` assegura
+-- Justificativa: O índice único na coluna 'e-mail' da tabela 'tb_clients' assegura
 -- que os e-mails sejam únicos e acelera consultas que buscam clientes pelo campo
 -- de e-mail, o que é uma operação comum, já que o e-mail é muitas vezes usado como
 -- identificador principal de clientes no sistema.

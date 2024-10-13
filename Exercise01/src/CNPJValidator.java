@@ -15,6 +15,7 @@ import static java.lang.Character.getNumericValue;
 /// - Verificação de tamanho correto.
 /// - Cálculo dos dígitos verificadores.
 /// - Comparação dos dígitos calculados com os dígitos fornecidos.
+/// - Fonte: [...](https://www.macoratti.net/alg_cnpj.htm)
 public class CNPJValidator {
 
     /// Metodo principal para validar o CNPJ.

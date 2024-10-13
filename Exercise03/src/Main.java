@@ -1,6 +1,6 @@
-import geometry.Retangulo;
+import geometry.Rectangle;
 
-import static geometry.Retangulo.areaOfIntersection;
+import static geometry.Rectangle.areaOfIntersection;
 
 /*
 3) Compute the area of intersection between two rectangles
@@ -39,9 +39,9 @@ import static geometry.Retangulo.areaOfIntersection;
 public static void main(String[] ignoredArgs) {
 
     // Exemplo de uso
-    Retangulo A = new Retangulo(3, 5, 11, 11);
-    Retangulo B = new Retangulo(7, 2, 13, 7);
-    Retangulo C = new Retangulo(11, 11, 15, 13);
+    Rectangle A = new Rectangle(3, 5, 11, 11);
+    Rectangle B = new Rectangle(7, 2, 13, 7);
+    Rectangle C = new Rectangle(11, 11, 15, 13);
 
     System.out.println("Área de interseção entre A e B: " + areaOfIntersection(A, B)); // 15
     System.out.println("Área de interseção entre A e C: " + areaOfIntersection(A, C)); // 1

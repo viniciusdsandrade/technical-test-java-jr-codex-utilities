@@ -17,6 +17,5 @@ public record TaskUpdateDTO(
 
         @Schema(description = "Indica se a tarefa está concluída.", example = "true")
         Boolean done
-
 ) {
 }

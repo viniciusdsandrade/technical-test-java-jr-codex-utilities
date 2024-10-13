@@ -54,11 +54,9 @@ public class WorldClockController {
             WorldClockResponse response = worldClockService.getCurrentUtcTime();
 
             if (response != null && response.utcDateTime() != null) {
-                // Parse da data/hora UTC
-                ZonedDateTime utcDateTime = parse(response.utcDateTime());
+                ZonedDateTime utcDateTime = parse(response.utcDateTime()); // Parse da data/hora UTC
 
-                // Conversão para o horário local
-                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(systemDefault());
+                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(systemDefault()); // Conversão para o horário local
 
                 // Formatação das datas em UTC e local
                 // Alterado o padrão de "yyyy-MM-dd HH:mm:ss z" para "dd/MM/yyyy HH:mm:ss z"
@@ -72,15 +70,12 @@ public class WorldClockController {
                 model.addAttribute("utcTime", formattedUtcTime);
                 model.addAttribute("localTime", formattedLocalTime);
             } else {
-                // Caso a resposta seja nula, adiciona uma mensagem de erro ao modelo
-                model.addAttribute("error", "Não foi possível obter o horário no momento.");
+                model.addAttribute("error", "Não foi possível obter o horário no momento."); // Caso a resposta seja nula, adiciona uma mensagem de erro ao modelo
             }
         } catch (WorldClockException e) {
-            // Tratamento de erro específico capturado do serviço
-            model.addAttribute("error", "Erro ao buscar o horário: " + e.getMessage());
+            model.addAttribute("error", "Erro ao buscar o horário: " + e.getMessage()); // Tratamento de erro específico capturado do serviço
         } catch (Exception e) {
-            // Tratamento genérico de outros erros
-            model.addAttribute("error", "Erro inesperado ao processar a requisição.");
+            model.addAttribute("error", "Erro inesperado ao processar a requisição."); // Tratamento genérico de outros erros
         }
 
         return "time"; // Nome do template Thymeleaf (time.html)
@@ -102,11 +97,9 @@ public class WorldClockController {
             WorldClockResponse response = worldClockService.getCurrentUtcTime();
 
             if (response != null && response.utcDateTime() != null) {
-                // Parse da data/hora UTC
-                ZonedDateTime utcDateTime = parse(response.utcDateTime());
+                ZonedDateTime utcDateTime = parse(response.utcDateTime()); // Parse da data/hora UTC
 
-                // Conversão para o horário local
-                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(systemDefault());
+                ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(systemDefault());  // Conversão para o horário local
 
                 // Formatação das datas em ISO 8601
                 // Mantém o formato ISO 8601 para padronização em APIs.
@@ -116,15 +109,12 @@ public class WorldClockController {
                 timeData.put("utcTime", utcDateTime.format(formatter));
                 timeData.put("localTime", localDateTime.format(formatter));
             } else {
-                // Caso a resposta seja nula, adiciona uma mensagem de erro ao mapa
-                timeData.put("error", "Não foi possível obter o horário no momento.");
+                timeData.put("error", "Não foi possível obter o horário no momento."); // Caso a resposta seja nula, adiciona uma mensagem de erro ao mapa
             }
         } catch (WorldClockException e) {
-            // Tratamento de erro específico capturado do serviço
-            timeData.put("error", "Erro ao buscar o horário: " + e.getMessage());
+            timeData.put("error", "Erro ao buscar o horário: " + e.getMessage()); // Tratamento de erro específico capturado do serviço
         } catch (Exception e) {
-            // Tratamento genérico de outros erros
-            timeData.put("error", "Erro inesperado ao processar a requisição.");
+            timeData.put("error", "Erro inesperado ao processar a requisição.");  // Tratamento genérico de outros erros
         }
 
         return timeData;

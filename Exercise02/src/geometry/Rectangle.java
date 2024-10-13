@@ -17,7 +17,7 @@ import static java.lang.Math.min;
 /// As coordenadas '(x1, y1)' e '(x2, y2)' representam os cantos inferior esquerdo e superior direito do retângulo, respectivamente. É importante que 'x1 ≤ x2' e 'y1 ≤ y2' para formar um retângulo válido.
 ///
 /// A classe implementa a interface 'Cloneable', permitindo que instâncias de 'Retangulo' sejam clonadas.
-public class Retangulo implements Cloneable {
+public class Rectangle implements Cloneable {
 
     private int x1, y1, x2, y2;
 
@@ -31,7 +31,7 @@ public class Retangulo implements Cloneable {
     /// @param x2 Coordenada x do segundo ponto.
     /// @param y2 Coordenada y do segundo ponto.
     /// @throws IllegalArgumentException Se as coordenadas não formarem um retângulo válido.
-    public Retangulo(int x1, int y1, int x2, int y2) {
+    public Rectangle(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -57,7 +57,7 @@ public class Retangulo implements Cloneable {
     /// @param r1 O primeiro retângulo.
     /// @param r2 O segundo retângulo.
     /// @return 'true' se os retângulos se intersectam; caso contrário, 'false'.
-    public static boolean intersects(Retangulo r1, Retangulo r2) {
+    public static boolean isIntersection(Rectangle r1, Rectangle r2) {
         if (r1.x2 < r2.x1 || r2.x2 < r1.x1) return false;
         return r1.y2 >= r2.y1 && r2.y2 >= r1.y1;
     }
@@ -67,11 +67,11 @@ public class Retangulo implements Cloneable {
     /// A área é calculada multiplicando a largura pela altura, considerando que cada unidade representa um ponto no plano.
     ///
     /// @return A área do retângulo.
-    public int calcularArea() {
-        int largura = this.x2 - this.x1 + 1; // Inclui os pontos nas bordas
-        int altura = this.y2 - this.y1 + 1;  // Inclui os pontos nas bordas
+    public int calculateArea() {
+        int width = this.x2 - this.x1 + 1; // Include the points on the edges
+        int height = this.y2 - this.y1 + 1; // Include the points on the edges
 
-        return largura * altura;
+        return width * height;
     }
 
     /// Metodo estático que calcula a área de interseção entre dois retângulos.
@@ -81,10 +81,10 @@ public class Retangulo implements Cloneable {
     /// @param r1 O primeiro retângulo.
     /// @param r2 O segundo retângulo.
     /// @return A área da interseção; se não houver interseção, retorna '0'.
-    public static int areaOfIntersection(Retangulo r1, Retangulo r2) {
-        Retangulo interseccao = calcularInterseccao(r1, r2);
+    public static int areaOfIntersection(Rectangle r1, Rectangle r2) {
+        Rectangle intersection = calculateIntersection(r1, r2);
 
-        if (interseccao != null) return interseccao.calcularArea();
+        if (intersection != null) return intersection.calculateArea();
 
         return 0;  // Sem interseção
     }
@@ -96,14 +96,19 @@ public class Retangulo implements Cloneable {
     /// @param r1 O primeiro retângulo.
     /// @param r2 O segundo retângulo.
     /// @return Um novo 'Retangulo' representando a interseção; se não houver interseção, retorna 'null'.
-    private static Retangulo calcularInterseccao(Retangulo r1, Retangulo r2) {
+    private static Rectangle calculateIntersection(Rectangle r1, Rectangle r2) {
         int interLeft = max(r1.x1, r2.x1);
         int interRight = min(r1.x2, r2.x2);
         int interBottom = max(r1.y1, r2.y1);
         int interTop = min(r1.y2, r2.y2);
 
         if (interLeft <= interRight && interBottom <= interTop)
-            return new Retangulo(interLeft, interBottom, interRight, interTop);
+            return new Rectangle(
+                    interLeft,
+                    interBottom,
+                    interRight,
+                    interTop
+            );
 
         return null; // Sem interseção
     }
@@ -134,7 +139,8 @@ public class Retangulo implements Cloneable {
     /// @param y Coordenada y do ponto.
     /// @return `true` se o ponto está dentro do retângulo; caso contrário,`false`.
     public boolean isPointInside(int x, int y) {
-        return x >= x1 && x <= x2 && y >= y1 && y <= y2;
+        return x >= x1 && x <= x2 &&
+               y >= y1 && y <= y2;
     }
 
     /// Retorna a coordenada x1 (canto inferior esquerdo) do retângulo.
@@ -169,9 +175,7 @@ public class Retangulo implements Cloneable {
     ///
     /// Verifica se as coordenadas atuais formam um retângulo válido. Se não forem, lança uma exceção.
     private void validateRectangle() {
-        if (!isValid()) {
-            throw new IllegalArgumentException("Coordenadas inválidas para formar um retângulo.");
-        }
+        if (!isValid()) throw new IllegalArgumentException("Coordenadas inválidas para formar um retângulo.");
     }
 
     /// Define a coordenada x1 do retângulo.
@@ -218,17 +222,17 @@ public class Retangulo implements Cloneable {
         validateRectangle();
     }
 
-    /// Construtor de cópia que cria um novo retângulo com as mesmas coordenadas de outro.
+    /// Construtor de cópia que cria um novo retângulo com as mesmas coordenadas de copy.
     ///
-    /// @param outro O retângulo a ser copiado.
+    /// @param copy O retângulo a ser copiado.
     /// @throws IllegalArgumentException Se o retângulo fornecido for `null`.
-    public Retangulo(Retangulo outro) {
-        if (outro == null) throw new IllegalArgumentException("O retângulo a ser copiado não pode ser nulo.");
+    public Rectangle(Rectangle copy) {
+        if (copy == null) throw new IllegalArgumentException("O retângulo a ser copiado não pode ser nulo.");
 
-        this.x1 = outro.getX1();
-        this.y1 = outro.getY1();
-        this.x2 = outro.getX2();
-        this.y2 = outro.getY2();
+        this.x1 = copy.getX1();
+        this.y1 = copy.getY1();
+        this.x2 = copy.getX2();
+        this.y2 = copy.getY2();
     }
 
     /// Cria e retorna uma cópia deste retângulo.
@@ -238,10 +242,10 @@ public class Retangulo implements Cloneable {
     /// @return Um clone deste retângulo.
     @Override
     @SuppressWarnings("MethodDoesntCallSuperMethod")
-    public Retangulo clone() {
-        Retangulo clone = null;
+    public Rectangle clone() {
+        Rectangle clone = null;
         try {
-            clone = new Retangulo(this);
+            clone = new Rectangle(this);
         } catch (Exception ignored) {
         }
         return clone;
@@ -257,9 +261,9 @@ public class Retangulo implements Cloneable {
         final int prime = 31;
         int hash = x1;
 
-        hash *= prime * hash + y1;
-        hash *= prime * hash + x2;
-        hash *= prime * hash + y2;
+        hash *= prime + y1;
+        hash *= prime + x2;
+        hash *= prime + y2;
 
         if (hash < 0) hash = -hash;
 
@@ -278,7 +282,7 @@ public class Retangulo implements Cloneable {
         if (o == null) return false;
         if (this.getClass() != o.getClass()) return false;
 
-        Retangulo that = (Retangulo) o;
+        Rectangle that = (Rectangle) o;
 
         return this.x1 == that.x1 &&
                this.y1 == that.y1 &&

@@ -128,8 +128,7 @@
 
         // Define um intervalo para atualizar os relógios a cada segundo
         clockInterval = setInterval(() => {
-            // Obtém o horário atual ajustado pelo offset de sincronização
-            const now = new Date(Date.now() + timeOffset);
+            const now = new Date(Date.now() + timeOffset);  // Obtém o horário atual ajustado pelo offset de sincronização
 
             // Formata a Hora UTC conforme as convenções brasileiras
             const utcTime = now.toLocaleString('pt-BR', {
