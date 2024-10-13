@@ -72,7 +72,7 @@ Para rodar o projeto, certifique-se de ter instalado:
 Este exercício consiste em validar se uma string está no formato correto de CNPJ e verificar seus dígitos verificadores
 conforme o algoritmo definido pela Receita Federal.
 
-#### Exemplo de Códigos:
+#### Código em Java
 
 ```java
 import static java.lang.Character.getNumericValue;
@@ -120,8 +120,8 @@ CNPJ  3 (48.724.911/0001-99) é inválido
 
 #### Screenshots
 
-Aqui estão alguns exemplos do código em execução:
-![Validação CNPJ](screenshot)
+Aqui está um exemplo do código em execução:
+![Validação CNPJ](screenshots/ex1.jpg)
 
 ### 2) Teste de Interseção entre Retângulos
 
@@ -197,8 +197,8 @@ intersects(B, C): false
 
 #### Screenshots
 
-Aqui estão alguns exemplos do código em execução:
-![Interseção Retângulos](screenshot)
+Aqui estão um exemplo do código em execução:
+![Interseção Retângulos](screenshots/ex2.jpg)
 
 ### 3) Cálculo da Área de Interseção entre Retângulos
 
@@ -272,8 +272,8 @@ Para testar o cálculo da área de interseção entre os retângulos, execute o 
 
 #### Screenshots
 
-Aqui estão alguns exemplos do código em execução:
-![Área de Interseção Retângulos](screenshot)
+Aqui está um exemplo do código em execução:
+![Área de Interseção Retângulos](screenshots/ex3.jpg)
 
 ### 4) Simple Todo List
 
@@ -357,8 +357,8 @@ Resposta: 204 No Content
 
 #### Screenshots
 
-Aqui estão alguns exemplos da aplicação em execução:
-![Todo List API](screenshot)
+Aqui está um exemplo da aplicação em execução:
+![Todo List API](screenshots/ex4.jpg)
 
 ### 5) Rest Client - World Clock
 
@@ -411,8 +411,8 @@ Resposta: 200 OK
 
 #### Screenshots
 
-Aqui estão alguns exemplos da aplicação em execução:
-![World Clock API](screenshot)
+Aqui está um exemplo da aplicação em execução:
+![World Clock API](screenshots/ex5.jpg)
 
 ### 6) Rest Server - World Clock
 
@@ -465,8 +465,8 @@ Resposta: 200 OK
 
 #### Screenshots
 
-Aqui estão alguns exemplos da aplicação em execução:
-![World Clock Rest Server](screenshot)
+Aqui está um exemplo da aplicação em execução:
+![World Clock Rest Server](screenshots/ex6.jpg)
 
 ### 7) Entity Relationship Diagram - Simple Order Manager
 
@@ -489,8 +489,10 @@ CREATE TABLE IF NOT EXISTS tb_clients
     email   VARCHAR(100) UNIQUE NOT NULL,
     phone   VARCHAR(15)         NULL,
     address VARCHAR(255)        NULL,
-    PRIMARY KEY (id),
-    UNIQUE (email)
+
+    UNIQUE (email),
+   
+    PRIMARY KEY (id)
 );
 
 -- Tabela de Produtos
@@ -501,6 +503,7 @@ CREATE TABLE IF NOT EXISTS tb_products
     description    TEXT           NULL,
     price          DECIMAL(10, 2) NOT NULL,
     stock_quantity INT UNSIGNED   NOT NULL DEFAULT 0,
+   
     PRIMARY KEY (id)
 );
 
@@ -512,7 +515,9 @@ CREATE TABLE IF NOT EXISTS tb_orders
     order_date   DATE                                                 NOT NULL,
     status       ENUM ('pending', 'shipped', 'delivered', 'canceled') NOT NULL,
     total_amount DECIMAL(10, 2) DEFAULT 0.00                          NOT NULL,
+   
     PRIMARY KEY (id),
+   
     FOREIGN KEY (client_id) REFERENCES tb_clients (id)
 );
 
@@ -524,7 +529,9 @@ CREATE TABLE IF NOT EXISTS tb_order_items
     product_id BIGINT UNSIGNED             NOT NULL,
     quantity   INT UNSIGNED                NOT NULL,
     price      DECIMAL(10, 2) DEFAULT 0.00 NOT NULL, -- Subtotal calculado pelo trigger
+   
     PRIMARY KEY (id),
+   
     FOREIGN KEY (order_id) REFERENCES tb_orders (id),
     FOREIGN KEY (product_id) REFERENCES tb_products (id)
 );
@@ -537,7 +544,9 @@ CREATE TABLE IF NOT EXISTS tb_payments
     payment_date   DATE                                                    NOT NULL,
     amount         DECIMAL(10, 2) DEFAULT 0.00                             NOT NULL, -- Valor calculado pelo trigger
     payment_method ENUM ('credit_card', 'paypal', 'bank_transfer', 'cash') NOT NULL,
+    
     PRIMARY KEY (id),
+   
     FOREIGN KEY (order_id) REFERENCES tb_orders (id)
 );
 ```
@@ -547,9 +556,10 @@ CREATE TABLE IF NOT EXISTS tb_payments
 Embora o exercício seja apenas a modelagem do banco de dados, você pode testar a criação das tabelas e relacionamentos
 executando o SQL acima em um banco de dados MySQL.
 A orderem sugerida é:
-1 - 'db_simple_order_manager';
-2 - 'rules_db_simple_order_manager';
-3 - 'seed_db_simple_order_manager';
+
+1.  `db_simple_order_manager`   
+2. `rules_db_simple_order_manager`
+3. `seed_db_simple_order_manager`
 
 #### Extras:
 
